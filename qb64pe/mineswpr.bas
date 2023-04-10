@@ -96,20 +96,24 @@ Function SquarePrint$1 (X, Y, L() As _Bit, U() As _Bit, F() As _Bit, ShowAll, Hi
     LM = 0
     If ShowAll = 0 Then
         If F(X, Y) = -1 Then
+            Color 7, 0
             SquarePrint$1 = "F"
             Exit Function
         End If
         If U(X, Y) = 0 Then
+            Color 7, 0
             SquarePrint$1 = "#"
             Exit Function
         End If
     Else
         If Hit$ <> "" And (Hex$(X) = "&H0" + Left$(Hit$, 1) And Hex$(Y) = "&H0" + Right$(Hit$, 1)) Then
+            Color 15, 12
             SquarePrint$1 = "!"
             Exit Function
         End If
     End If
     If L(X, Y) = -1 Then
+        Color 0, 15
         SquarePrint$1 = "*"
         Exit Function
     End If
@@ -122,6 +126,7 @@ Function SquarePrint$1 (X, Y, L() As _Bit, U() As _Bit, F() As _Bit, ShowAll, Hi
             End If
         Next J
     Next I
+    If Val(Right$(Str$(LM), 1)) = 0 Then Color 15, 0 Else Color Val(Right$(Str$(LM), 1)), 0
     SquarePrint$1 = Right$(Str$(LM), 1)
 End Function
 
@@ -167,7 +172,7 @@ Function GameLoop` (W, H, L() As _Bit, M)
         For I = 0 To H - 1
             Print Right$(Hex$(I), 1); "   ";
             For J = 0 To W - 1
-                Color 15, 0: Print SquarePrint(J, I, L(), Uncovered(), Flags(), (GameOver` Or Won`), t$);
+                Print SquarePrint(J, I, L(), Uncovered(), Flags(), (GameOver` Or Won`), t$);
             Next J
             Print
             Color 7, 0
