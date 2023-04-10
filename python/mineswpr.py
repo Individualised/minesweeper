@@ -38,6 +38,7 @@ def newGame(newLevel):
                 if mines < 1 or mines > (levelWidth*levelHeight) - 1:
                     print("Invalid")
                 else:
+
                     break
         level = generateLevel(levelWidth, levelHeight, mines)
     return(gameLoop(levelWidth, levelHeight, level, mines))
@@ -99,7 +100,7 @@ def gameLoop(w, h, level, mines):
     firstMove = True;
     while 1:
         #print(won)
-        print(" " * ((int(w/2) + 3)) + (":D" if won else (":(" if gameOver else ":)")))
+        print(" " * (int(w/2) + 3) + (":D" if won else (":(" if gameOver else ":)")))
         print("    " + "0123456789ABCDEF"[:w] + "\n")
         #print(uncovered[1][0])
         for i in range(h):
