@@ -94,7 +94,7 @@ End Function
 
 Function SquarePrint$1 (X, Y, L() As _Bit, U() As _Bit, F() As _Bit, ShowAll, Hit$)
     LM = 0
-    If ShowAll = 0 Then
+    If Not ShowAll Then
         If F(X, Y) = -1 Then
             Color 7, 0
             SquarePrint$1 = "F"
@@ -106,7 +106,11 @@ Function SquarePrint$1 (X, Y, L() As _Bit, U() As _Bit, F() As _Bit, ShowAll, Hi
             Exit Function
         End If
     Else
-        If Hit$ <> "" And (Hex$(X) = "&H0" + Left$(Hit$, 1) And Hex$(Y) = "&H0" + Right$(Hit$, 1)) Then
+        'Print Hex$(X)
+        'Print "&H0" + Left$(Hit$, 1)
+        'Print Hex$(Y)
+        'Print "&H0" + Right$(Hit$, 1)
+        If Hit$ <> "" And (Hex$(X) = Left$(Hit$, 1) And Hex$(Y) = Right$(Hit$, 1)) Then
             Color 15, 12
             SquarePrint$1 = "!"
             Exit Function
@@ -168,7 +172,7 @@ Function GameLoop` (W, H, L() As _Bit, M)
         End If
         Color 7, 0
         Print "    "; Left$("0123456789ABCDEF", W); Chr$(13)
-        If Won` = 0 Then t$ = Move$ Else t$ = ""
+        If Won` = 0 Then t$ = Left$(Move$, 2) Else t$ = ""
         For I = 0 To H - 1
             Print Right$(Hex$(I), 1); "   ";
             For J = 0 To W - 1
@@ -230,7 +234,6 @@ Function GameLoop` (W, H, L() As _Bit, M)
                 Uncovered(Val("&H" + Left$(Move$, 1)), Val("&H" + Right$(Left$(Move$, 2), 1))) = -1
                 If Level(Val("&H" + Left$(Move$, 1)), Val("&H" + Right$(Left$(Move$, 2), 1))) Then
                     If FirstMove` Then
-                        Level(Val("&H" + Left$(Move$, 1)), Val("&H" + Right$(Left$(Move$, 2), 1))) = 0
                         While 1
                             RandX = RandRange(0, W)
                             RandY = RandRange(0, H)
@@ -240,6 +243,7 @@ Function GameLoop` (W, H, L() As _Bit, M)
                                 Exit While
                             End If
                         Wend
+                        Level(Val("&H" + Left$(Move$, 1)), Val("&H" + Right$(Left$(Move$, 2), 1))) = 0
                     Else
                         GameOver` = -1
                     End If

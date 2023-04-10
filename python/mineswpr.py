@@ -147,13 +147,13 @@ def gameLoop(w, h, level, mines):
                 uncovered[int(move[0], 16)][int(move[1], 16)] = True
                 if level[int(move[0], 16)][int(move[1], 16)]:
                     if firstMove:
-                        level[int(move[0], 16)][int(move[1], 16)] = 0
                         while 1:
                             randX = random.randrange(0, w)
                             randY = random.randrange(0, h)
                             if level[randX][randY] == 0:
                                 level[randX][randY] = 1
-                                break;                 
+                                break;
+                        level[int(move[0], 16)][int(move[1], 16)] = 0
                     else:
                         gameOver = True;
                 if not gameOver:
