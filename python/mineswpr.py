@@ -135,10 +135,9 @@ def gameLoop(w, h, level, mines):
                     print("Invalid") 
                     continue;
                 #print(int(move[0], 16), int(move[0], 16) > h - 1, int(move[1], 16), int(move[1], 16) > w - 1)
-                if int(move[0], 16) > h - 1 or int(move[1], 16) > w - 1:
+                if int(move[0], 16) > w - 1 or int(move[1], 16) > h - 1:
                     print("Invalid")
-                    continue;
-                
+                    continue;                
                 break;
                
         if move[2] == "F":
@@ -146,18 +145,15 @@ def gameLoop(w, h, level, mines):
         else:
             if not flags[int(move[0], 16)][int(move[1], 16)]:
                 uncovered[int(move[0], 16)][int(move[1], 16)] = True
-                if level[int(move[0], 16)][int(move[1], 16)] == 1:
+                if level[int(move[0], 16)][int(move[1], 16)]:
                     if firstMove:
                         level[int(move[0], 16)][int(move[1], 16)] = 0
-                        m = 1
                         while 1:
                             randX = random.randrange(0, w)
                             randY = random.randrange(0, h)
-                            if level[randX][randY] == 1:
-                                continue;
-                            else:
+                            if level[randX][randY] == 0:
                                 level[randX][randY] = 1
-                                break;
+                                break;                 
                     else:
                         gameOver = True;
                 if not gameOver:

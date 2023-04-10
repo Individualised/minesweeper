@@ -145,33 +145,35 @@ Function GameLoop` (W, H, L() As _Bit, M)
     GameOver` = 0
     Won` = 0
     Move$ = ""
-    FirstMove` = 1
+    FirstMove` = -1
     While -1
         Print W
         Print String$(Int(W / 2) + 3, " ");
-        If Won = 1 Then
+        If Won` = -1 Then
             Print ":D"
         Else
-            If GameOver = 1 Then
+            If GameOver` = -1 Then
                 Print ":("
             Else
                 Print ":)"
             End If
         End If
         Print "    "; Left$("0123456789ABCDEF", W); Chr$(13)
-        If Won = 0 Then t$ = Move$ Else t$ = ""
+        If Won` = 0 Then t$ = Move$ Else t$ = ""
         For I = 0 To H - 1
             Print Right$(Hex$(I), 1); "   ";
             For J = 0 To W - 1
-                Print SquarePrint(J, I, L(), Uncovered(), Flags(), (GameOver Or Won), t$);
+                Print SquarePrint(J, I, L(), Uncovered(), Flags(), (GameOver` Or Won`), t$);
             Next J
             Print
         Next I
-        If GameOver Then
+        If GameOver` Then
             GameLoop` = 0
+            Exit Function
         End If
-        If Won Then
+        If Won` Then
             GameLoop` = -1
+            Exit Function
         End If
         While -1
             Input "Make your move (X, Y, (U)ncover or (F)lag):", Move$
@@ -203,8 +205,51 @@ Function GameLoop` (W, H, L() As _Bit, M)
                 Print ("Invalid Hex")
                 _Continue
             End If
+            If Val("&H" + Left$(Move$, 1)) > W - 1 Or Val("&H" + Right$(Left$(Move$, 2), 1)) > H - 1 Then
+                Print ("Out of bounds")
+                _Continue
+            End If
 
+            Exit While
         Wend
+
+        If Right$(Left$(Move$, 3), 1) = "F" Then
+            Flags(Val("&H" + Left$(Move$, 1)), Val("&H" + Right$(Left$(Move$, 2), 1))) = Not Flags(Val("&H" + Left$(Move$, 1)), Val("&H" + Right$(Left$(Move$, 2), 1)))
+        Else
+            If Not Flags(Val("&H" + Left$(Move$, 1)), Val("&H" + Right$(Left$(Move$, 2), 1))) Then
+                Uncovered(Val("&H" + Left$(Move$, 1)), Val("&H" + Right$(Left$(Move$, 2), 1))) = -1
+                If Level(Val("&H" + Left$(Move$, 1)), Val("&H" + Right$(Left$(Move$, 2), 1))) Then
+                    If FirstMove` Then
+                        Level(Val("&H" + Left$(Move$, 1)), Val("&H" + Right$(Left$(Move$, 2), 1))) = 0
+                        While 1
+                            RandX = RandRange(0, W)
+                            RandY = RandRange(0, H)
+                            'Print Right$(Hex$(RandX), 1); " "; Right$(Hex$(RandY), 1)
+                            If Level(RandX, RandY) = 0 Then
+                                Level(RandX, RandY) = -1
+                                Exit While
+                            End If
+                        Wend
+                    Else
+                        GameOver` = -1
+                    End If
+                End If
+                If Not GameOver` Then
+                    K = 0
+                    For I = 0 To H - 1
+                        For J = 0 To W - 1
+                            If Uncovered(J, I) Then
+                                K = K + 1
+                            End If
+                        Next J
+                    Next I
+                    If K = (H * W) - Mines Then
+                        Won` = -1
+                    End If
+                End If
+                FirstMove` = 0
+            End If
+        End If
     Wend
 
 End Function
