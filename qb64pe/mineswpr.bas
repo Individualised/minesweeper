@@ -197,15 +197,15 @@ Function GameLoop` (W, H, L() As _Bit, M)
             Move$ = UCase$(Move$)
             'Print Move$
             If Len(Move$) < 2 Then
-                Print ("< 2")
+                'Print ("< 2")
                 _Continue
             End If
             If Len(Move$) = 2 Then
-                Print ("= 2")
+                'Print ("= 2")
                 Move$ = Move$ + "U"
             End If
             If Right$(Left$(Move$, 3), 1) <> "U" And Right$(Left$(Move$, 3), 1) <> "F" Then
-                Print ("!= U Or F")
+                'Print ("!= U Or F")
                 _Continue
             End If
             InvalidHex = -1
@@ -216,11 +216,11 @@ Function GameLoop` (W, H, L() As _Bit, M)
                 End If
             Next I
             If HexDigits(Left$(Move$, 1)) Or HexDigits(Right$(Left$(Move$, 2), 1)) Then
-                Print ("Invalid Hex")
+                'Print ("Invalid Hex")
                 _Continue
             End If
             If Val("&H" + Left$(Move$, 1)) > W - 1 Or Val("&H" + Right$(Left$(Move$, 2), 1)) > H - 1 Then
-                Print ("Out of bounds")
+                'Print ("Out of bounds")
                 _Continue
             End If
 
