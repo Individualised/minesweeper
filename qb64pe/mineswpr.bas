@@ -274,7 +274,6 @@ Function GameLoop` (W, H, L() As _Bit, M)
             End If
         End If
     Wend
-
 End Function
 
 
