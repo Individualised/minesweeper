@@ -1,4 +1,4 @@
-$Debug
+'$Debug
 $Resize:On
 $Resize:Smooth
 Randomize Timer
@@ -38,6 +38,7 @@ While -1
 Wend
 
 
+
 Function NewGame` (NewLevel)
     If NewLevel Then
         While -1
@@ -62,6 +63,8 @@ Function NewGame` (NewLevel)
     End If
     NewGame` = GameLoop(LevelWidth, LevelHeight, Level(), Mines)
 End Function
+
+
 
 Sub GenerateLevel (W, H, M)
     Erase Level
@@ -88,9 +91,13 @@ Sub GenerateLevel (W, H, M)
     'Next I
 End Sub
 
+
+
 Function RandRange% (I, J)
     RandRange% = (Int(Rnd * 1000) Mod J) + I
 End Function
+
+
 
 Function SquarePrint$1 (X, Y, L() As _Bit, U() As _Bit, F() As _Bit, ShowAll, Hit$)
     LM = 0
@@ -135,6 +142,7 @@ Function SquarePrint$1 (X, Y, L() As _Bit, U() As _Bit, F() As _Bit, ShowAll, Hi
 End Function
 
 
+
 Function Replace$ (text$, old$, new$) 'can also be used as a SUB without the count assignment
     Do
         find = InStr(start + 1, text$, old$) 'find location of a word in text
@@ -148,6 +156,7 @@ Function Replace$ (text$, old$, new$) 'can also be used as a SUB without the cou
     Loop While find
     Replace$ = text$
 End Function
+
 
 
 Function GameLoop` (W, H, L() As _Bit, M)
@@ -267,6 +276,8 @@ Function GameLoop` (W, H, L() As _Bit, M)
     Wend
 
 End Function
+
+
 
 Function HexDigits` (Character$)
     HexDigits` = 0
