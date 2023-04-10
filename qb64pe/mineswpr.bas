@@ -178,8 +178,8 @@ Function GameLoop` (W, H, L() As _Bit, M)
             For J = 0 To W - 1
                 Print SquarePrint(J, I, L(), Uncovered(), Flags(), (GameOver` Or Won`), t$);
             Next J
-            Print
             Color 7, 0
+            Print
         Next I
         If GameOver` Then
             GameLoop` = 0
