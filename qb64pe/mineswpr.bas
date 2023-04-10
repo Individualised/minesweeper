@@ -1,4 +1,6 @@
 $Debug
+$Resize:On
+$Resize:Smooth
 Randomize Timer
 Dim Shared As _Unsigned _Byte LevelWidth, LevelHeight, Mines
 Dim Shared Level(16, 16) As _Bit
@@ -149,6 +151,7 @@ Function GameLoop` (W, H, L() As _Bit, M)
     While -1
         Print W
         Print String$(Int(W / 2) + 3, " ");
+        Color 14, 0
         If Won` = -1 Then
             Print ":D"
         Else
@@ -158,14 +161,16 @@ Function GameLoop` (W, H, L() As _Bit, M)
                 Print ":)"
             End If
         End If
+        Color 7, 0
         Print "    "; Left$("0123456789ABCDEF", W); Chr$(13)
         If Won` = 0 Then t$ = Move$ Else t$ = ""
         For I = 0 To H - 1
             Print Right$(Hex$(I), 1); "   ";
             For J = 0 To W - 1
-                Print SquarePrint(J, I, L(), Uncovered(), Flags(), (GameOver` Or Won`), t$);
+                Color 15, 0: Print SquarePrint(J, I, L(), Uncovered(), Flags(), (GameOver` Or Won`), t$);
             Next J
             Print
+            Color 7, 0
         Next I
         If GameOver` Then
             GameLoop` = 0
